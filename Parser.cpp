@@ -3,7 +3,10 @@
 #include <string>
 #include "Parser.h"
 
-using namespace std;
+using std::string;
+using std::cout;
+using std::istream;
+using std::endl;
 
 Parser::Parser(string asmFile)
 {
@@ -20,4 +23,5 @@ Parser::Parser(string asmFile)
 
 bool Parser::hasMoreCommands()
 {
+    return true;
 }

@@ -1,12 +1,17 @@
 #include <iostream>
 #include <string>
 #include "Parser.h"
+#include <stdexcept>
 
 using std::string;
+using std::invalid_argument;
 
 int main(int argc, char *argv[])
 {
-    // Read raw
+    if(!argv[1])
+    {
+        throw invalid_argument("ERROR. Assembly file name not provided!");
+    }
     string asmFile = argv[1];
     Parser parser(asmFile);
     

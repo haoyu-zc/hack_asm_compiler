@@ -5,6 +5,9 @@
 
 using std::string;
 using std::ifstream;
+using std::cout;
+using std::endl;
+
 using A_COMMAND = string;
 using C_COMMAND = string;
 using L_COMMAND = string;
@@ -12,7 +15,6 @@ using L_COMMAND = string;
 class Parser
 {
 private:
-    ifstream asmFile;
 
 public:
     Parser() = default;
