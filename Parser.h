@@ -3,30 +3,30 @@
 #include <string>
 #include <fstream>
 
-using std::string;
-using std::ifstream;
 using std::cout;
 using std::endl;
+using std::ifstream;
+using std::string;
 
-using A_COMMAND = string;
-using C_COMMAND = string;
-using L_COMMAND = string;
+using A_COMMAND = char[16];
+using C_COMMAND = char[16];
+using L_COMMAND = char[16];
 
 class Parser
 {
 private:
+    ifstream fin;
+    string currentCmd;
+
+    void trim();
 
 public:
-    Parser() = default;
     // Load the assembly file in commnad line argument
     Parser(string asmFile);
 
-    // Open a file
-    void open(string asmFile);
-
     // Is there more commands in the asm file?
     bool hasMoreCommands();
-    
+
     // Load next command and set it as "current" command.
     void advance();
 
@@ -49,5 +49,4 @@ public:
     // Return the jump mnemonic in the current C-command (8 possibilities).
     // Should be called only when command_type is C_COMMAND.
     string jump();
-
 };
