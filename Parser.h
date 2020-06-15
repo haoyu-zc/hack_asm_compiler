@@ -32,7 +32,7 @@ public:
 
     // Return the type of the current command, including
     // A_COMMAND, C_COMMAND, and L_COMMAND.
-    auto commandType();
+    int commandType();
 
     // Return the symbol or decimal Xxx of the current command @Xxx or (Xxx).
     // Should be called only when command_type is A_COMMAND or L_COMMAND.

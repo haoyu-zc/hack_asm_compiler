@@ -55,7 +55,7 @@ void Parser::advance()
     getline(fin, this->currentCmd);
 }
 
-auto Parser::commandType()
+int Parser::commandType()
 {
     const char *firstChar = &this->currentCmd.at(0);
     switch (*firstChar)
