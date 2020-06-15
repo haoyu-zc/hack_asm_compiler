@@ -8,7 +8,7 @@ using std::endl;
 using std::ifstream;
 using std::string;
 
-static const int A_COMMNAD = 1;
+static const int A_COMMAND = 1;
 static const int C_COMMAND = 2;
 static const int L_COMMAND = 3;
 

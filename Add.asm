@@ -6,6 +6,7 @@
 // Computes R0 = 2 + 3  (R0 refers to RAM[0])
 
 @2  // Inline comment
+(LOOP)
 D=A
 @3
 D=D+A
