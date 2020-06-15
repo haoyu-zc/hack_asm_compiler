@@ -38,13 +38,13 @@ public:
     // Should be called only when command_type is A_COMMAND or L_COMMAND.
     string symbol();
 
-    // Return the dest mnemonic in the current C-command (8 possibilities).
-    // Should be called only when command_type is C_COMMAND.
-    string dest();
-
     // Return the comp mnemonic in the current C-command (28 possibilities).
     // Should be called only when command_type is C_COMMAND.
     string comp();
+
+    // Return the dest mnemonic in the current C-command (8 possibilities).
+    // Should be called only when command_type is C_COMMAND.
+    string dest();
 
     // Return the jump mnemonic in the current C-command (8 possibilities).
     // Should be called only when command_type is C_COMMAND.

@@ -22,7 +22,7 @@ void Parser::trim()
     this->advance();
     this->advance();
     command = this->currentCmd;
-    cout << this->symbol() << endl;
+    cout << this->dest() << endl;
 
     // while (this->hasMoreCommands())
     // {
@@ -106,4 +106,34 @@ string Parser::symbol()
     }
     else
         throw runtime_error("Not a A or L command!");
+}
+
+string Parser::comp()
+{
+    // Judge whether the current command is a C-Command.
+    if (this->commandType() != C_COMMAND)
+        throw runtime_error("Not a C command!");
+
+    // Return the comp field
+    if (int semiPos = this->currentCmd.find(';'))
+        // If there is a jump field, return the first char for comp field.
+        return this->currentCmd.substr(0, 1);
+    else
+    {
+        int pos = this->currentCmd.find('=');
+        return this->currentCmd.substr(pos + 1);
+    }
+}
+
+string Parser::dest()
+{
+    // Judge whether the current command is a C-Command.
+    if (this->commandType() != C_COMMAND)
+        throw runtime_error("Not a C command!");
+
+    // Judge whether there is a dest field.
+    if (this->currentCmd.find('='))
+        return this->currentCmd.substr(0, 1);
+    else
+        return "null";
 }
