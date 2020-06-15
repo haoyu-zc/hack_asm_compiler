@@ -8,9 +8,9 @@ using std::endl;
 using std::ifstream;
 using std::string;
 
-using A_COMMAND = char[16];
-using C_COMMAND = char[16];
-using L_COMMAND = char[16];
+static const int A_COMMNAD = 1;
+static const int C_COMMAND = 2;
+static const int L_COMMAND = 3;
 
 class Parser
 {
