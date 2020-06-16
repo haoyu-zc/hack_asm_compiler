@@ -15,6 +15,7 @@ int main(int argc, char *argv[])
     // }
     // string asmFile = argv[1];
     Code code;
+    code.aCmdCode("2");
     //Parser parser(asmFile);
     
     // Output coded hack file.

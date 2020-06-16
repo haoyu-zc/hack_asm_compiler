@@ -15,5 +15,9 @@ private:
 public:
     Code();
     void loadTable(initializer_list<string> files);
+    string comp(string compStr);
+    string dest(string destStr);
+    string jump(string jumpStr);
+    string aCmdCode(string aStr);
 };
 
