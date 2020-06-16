@@ -18,6 +18,7 @@ Code::Code()
     this->loadTable({compa0File, compa1File, destFile, jumpFile});
 }
 
+
 void Code::loadTable(initializer_list<string> files)
 {
     for (const string &file : files)
@@ -28,14 +29,19 @@ void Code::loadTable(initializer_list<string> files)
         string symbol;
         string binary;
         int tabPos;
+
         while (fin.peek() != EOF)
         {
             getline(fin, line);
             tabPos = line.find('\t');
             symbol = line.substr(0, tabPos);
             binary = line.substr(tabPos + 1);
-            this->biTable[symbol] = binary;
-            cout << symbol << '\t' << biTable[symbol] << endl;
+            if (file.find("comp") != string::npos)
+                this->compTable[symbol] = binary;
+            else if (file.find("dest") != string::npos)
+                this->destTable[symbol] = binary;
+            else if (file.find("jump") != string::npos)
+                this->jumpTable[symbol] = binary;
         }
 
         fin.close();
@@ -44,17 +50,17 @@ void Code::loadTable(initializer_list<string> files)
 
 string Code::comp(string compStr)
 {
-    return this->biTable[compStr];
+    return this->compTable[compStr];
 }
 
 string Code::dest(string destStr)
 {
-    return this->biTable[destStr];
+    return this->destTable[destStr];
 }
 
 string Code::jump(string jumpStr)
 {
-    return this->biTable[jumpStr];
+    return this->jumpTable[jumpStr];
 }
 
 string Code::aCmdCode(string aStr)

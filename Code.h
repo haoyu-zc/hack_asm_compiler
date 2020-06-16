@@ -10,7 +10,9 @@ using std::initializer_list;
 class Code
 {
 private:
-    map<string, string> biTable;
+    map<string, string> compTable;
+    map<string, string> destTable;
+    map<string, string> jumpTable;
 
 public:
     Code();
