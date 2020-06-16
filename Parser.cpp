@@ -123,7 +123,7 @@ string Parser::dest()
         throw runtime_error("Not a C command!");
 
     // Judge whether there is a dest field.
-    if (this->currentCmd.find('='))
+    if (this->currentCmd.find('=') != string::npos)
         return this->currentCmd.substr(0, 1);
     else
         return "null";
