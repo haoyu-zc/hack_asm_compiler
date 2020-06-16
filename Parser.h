@@ -17,10 +17,10 @@ class Parser
 {
 private:
     ifstream fin;
-    string currentCmd;
-
 
 public:
+    string currentCmd;
+
     // Load the assembly file in commnad line argument
     Parser(string asmFile);
 
