@@ -19,21 +19,26 @@ int main(int argc, char *argv[])
     
     string command;
     string binary;
-    while (parser.hasMoreCommands())
-    {
-        parser.advance();
-        command = parser.currentCmd;
-        if (parser.commandType() == A_COMMAND)
-        {
-            binary = code.aCmdCode(parser.symbol());
-            cout << binary << endl;
-        }
-        else if (parser.commandType() == C_COMMAND)
-        {
-            binary = "111" + code.comp(parser.comp()) + code.dest(parser.dest()) + code.jump(parser.jump());
-            cout << binary << endl;
-        }
-    }
+    // while (parser.hasMoreCommands())
+    // {
+    //     parser.advance();
+    //     command = parser.currentCmd;
+    //     if (parser.commandType() == A_COMMAND)
+    //     {
+    //         binary = code.aCmdCode(parser.symbol());
+    //         cout << binary << endl;
+    //     }
+    //     else if (parser.commandType() == C_COMMAND)
+    //     {
+    //         binary = "111" + code.comp(parser.comp()) + code.dest(parser.dest()) + code.jump(parser.jump());
+    //         cout << binary << endl;
+    //     }
+    // }
+    parser.advance();
+    parser.advance();
+    cout << parser.comp() << endl;
+
+    cout << code.comp(parser.comp()) << endl;
 
     return 0;
 }
