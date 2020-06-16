@@ -11,35 +11,24 @@ void Parser::trim()
 {
     ofstream fout;
     fout.open("trimedFile.asm");
-    // Define regex parameters.
-    // Remove one-line and inline comments (and the spaces in the beginning).
-    string pattern = "\\W*//.+";
-    regex r(pattern);
-    string fmt = "";
 
     string command;
 
-    this->advance();
-    this->advance();
-    this->advance();
-    command = this->currentCmd;
-    cout << this->jump() << endl;
+    while (this->hasMoreCommands())
+    {
+        this->advance();
+        command = this->currentCmd;
 
-    // while (this->hasMoreCommands())
-    // {
-    //     this->advance();
-    //     command = this->currentCmd;
+        /* hasMoreCommarnd() test */
+        cout << command + " has more commands? " << boolalpha << this->hasMoreCommands() << endl;
+        cout << this->commandType() << endl;
 
-    //     /* hasMoreCommarnd() test */
-    //     // cout << command + " has more commands? " << boolalpha << this->hasMoreCommands() << endl;
-    //     // cout << this->commandType() << endl;
+        /* symbol() test */
+        if(this->commandType() == A_COMMAND)
+            cout << this->symbol() << endl;
 
-    //     /* symbol() test */
-    //     // if(this->commandType() == A_COMMAND)
-    //     //     cout << this->symbol() << endl;
-
-    //     fout << command << endl;
-    // }
+        fout << command << endl;
+    }
     fin.close();
     fout.close();
 }
@@ -49,7 +38,6 @@ Parser::Parser(string asmFile)
 {
     //ifstream fin;
     this->fin.open(asmFile);
-    this->trim();
 }
 
 bool Parser::hasMoreCommands()

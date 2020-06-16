@@ -19,11 +19,13 @@ private:
     ifstream fin;
     string currentCmd;
 
-    void trim();
 
 public:
     // Load the assembly file in commnad line argument
     Parser(string asmFile);
+
+    // Output a trimed file(no empty lines and comments).
+    void trim();
 
     // Is there more commands in the asm file?
     bool hasMoreCommands();
