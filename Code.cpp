@@ -60,6 +60,5 @@ string Code::aCmdCode(string aStr)
 {
     // Convert the decimal value of an A-Command to a binary string with leading-zero padding.
     string binary = bitset<15>(stoi(aStr)).to_string();
-    cout << "0" + binary << endl;
     return "0" + binary;
 }
