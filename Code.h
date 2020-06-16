@@ -13,10 +13,7 @@ private:
     map<string, string> biTable;
 
 public:
-    Code(/* args */);
+    Code();
     void loadTable(initializer_list<string> files);
-    void loadCompa1(string compa1);
-    void loadDest(string dest);
-    void loadJmp(string Jmp);
 };
 
