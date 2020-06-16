@@ -35,7 +35,6 @@ void Code::loadTable(initializer_list<string> files)
             symbol = line.substr(0, tabPos);
             binary = line.substr(tabPos + 1);
             this->biTable[symbol] = binary;
-            cout << symbol << '\t' << biTable[symbol] << endl;
         }
 
         fin.close();
