@@ -23,7 +23,7 @@ void Parser::trim()
     this->advance();
     this->advance();
     command = this->currentCmd;
-    cout << this->comp() << endl;
+    cout << this->jump() << endl;
 
     // while (this->hasMoreCommands())
     // {
@@ -137,6 +137,15 @@ string Parser::dest()
     // Judge whether there is a dest field.
     if (this->currentCmd.find('='))
         return this->currentCmd.substr(0, 1);
+    else
+        return "null";
+}
+
+string Parser::jump()
+{
+    if (int semiPos = this->currentCmd.find(';') != string::npos)
+        // If there is a jump field, return the chars before ";" for comp field.
+        return this->currentCmd.substr(semiPos + 1);
     else
         return "null";
 }
