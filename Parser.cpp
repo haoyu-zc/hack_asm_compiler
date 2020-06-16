@@ -21,8 +21,9 @@ void Parser::trim()
 
     this->advance();
     this->advance();
+    this->advance();
     command = this->currentCmd;
-    cout << this->dest() << endl;
+    cout << this->comp() << endl;
 
     // while (this->hasMoreCommands())
     // {
@@ -115,13 +116,15 @@ string Parser::comp()
         throw runtime_error("Not a C command!");
 
     // Return the comp field
-    if (int semiPos = this->currentCmd.find(';'))
-        // If there is a jump field, return the first char for comp field.
-        return this->currentCmd.substr(0, 1);
+    // Parse command such as "0;JEQ"
+    if (int semiPos = this->currentCmd.find(';') != string::npos)
+        // If there is a jump field, return the chars before ";" for comp field.
+        return this->currentCmd.substr(0, semiPos);
     else
     {
-        int pos = this->currentCmd.find('=');
-        return this->currentCmd.substr(pos + 1);
+        // Parse command such as "D=A"
+        int eqPos = this->currentCmd.find('=');
+        return this->currentCmd.substr(eqPos + 1);
     }
 }
 
