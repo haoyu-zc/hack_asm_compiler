@@ -105,7 +105,8 @@ string Parser::comp()
 
     // Return the comp field
     // Parse command such as "0;JEQ"
-    if (int semiPos = this->currentCmd.find(';') != string::npos)
+    int semiPos = this->currentCmd.find(';');
+    if (semiPos != string::npos)
         // If there is a jump field, return the chars before ";" for comp field.
         return this->currentCmd.substr(0, semiPos);
     else
@@ -118,20 +119,22 @@ string Parser::comp()
 
 string Parser::dest()
 {
-    // Judge whether the current command is a C-Command.
+    // Check whether the current command is a C-Command.
     if (this->commandType() != C_COMMAND)
         throw runtime_error("Not a C command!");
 
-    // Judge whether there is a dest field.
-    if (this->currentCmd.find('=') != string::npos)
-        return this->currentCmd.substr(0, 1);
+    // Check whether there is a dest field.
+    int eqPos = this->currentCmd.find("=");
+    if (eqPos != string::npos)
+        return this->currentCmd.substr(0, eqPos);
     else
         return "null";
 }
 
 string Parser::jump()
 {
-    if (int semiPos = this->currentCmd.find(';') != string::npos)
+    int semiPos = this->currentCmd.find(';');
+    if (semiPos != string::npos)
         // If there is a jump field, return the chars before ";" for comp field.
         return this->currentCmd.substr(semiPos + 1);
     else
