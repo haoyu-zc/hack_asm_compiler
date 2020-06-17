@@ -17,6 +17,7 @@ class Parser
 {
 private:
     ifstream fin;
+    string removeSpaces(string str);
 
 public:
     string currentCmd;

@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
     // First scan to deal with labels.
     Parser parser1(asmFile);
     // Rom addresss starting from 0. ++romAdd when encounter none-L commands.
-    int romAddr = 0;
+    int romAddr = -1;
     while (parser1.hasMoreCommands())
     {
         parser1.advance();
@@ -46,7 +46,7 @@ int main(int argc, char *argv[])
     ofstream hackFile;
     hackFile.open(asmFile.substr(0, asmFile.find('.')) + ".hack");
     int memOffset = 16;
-    int memAddr = 0;
+    int memAddr;
     string symbol;
     string binary;
     Parser parser2(asmFile);
@@ -55,7 +55,6 @@ int main(int argc, char *argv[])
     while (parser2.hasMoreCommands())
     {
         parser2.advance();
-        cout << parser2.currentCmd << endl;
         if (parser2.commandType() == A_COMMAND)
         {
             //cout << " A_COMMAND!" << endl;

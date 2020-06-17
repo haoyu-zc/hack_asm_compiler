@@ -3,8 +3,16 @@
 #include <string>
 #include "Parser.h"
 #include <regex>
+#include <algorithm>
 
 using namespace std;
+
+// Function to remove all spaces from a given string
+string Parser::removeSpaces(string input)
+{
+    input.erase(std::remove(input.begin(), input.end(), ' '), input.end());
+    return input;
+}
 
 // Private fuctions
 void Parser::trim()
@@ -53,20 +61,18 @@ void Parser::advance()
 {
     // Remove "//" comments and spaces in the front.
     string pattern_comt = "\\W*//.+";
-    string pattern_spaces = "^\\s*";
     regex r_comt(pattern_comt);
-    regex r_spaces(pattern_spaces);
     string fmt = "";
     string line;
     getline(fin, line);
     line = regex_replace(line, r_comt, fmt);
-    line = regex_replace(line, r_spaces, fmt);
+    line = removeSpaces(line);
     // Skip empty lines after removing comments.
     while (line.empty())
     {
         getline(fin, line);
         line = regex_replace(line, r_comt, fmt);
-        line = regex_replace(line, r_spaces, fmt);
+        line = removeSpaces(line);
     }
     this->currentCmd = line;
 }
