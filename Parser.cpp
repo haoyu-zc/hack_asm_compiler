@@ -24,7 +24,7 @@ void Parser::trim()
         cout << this->commandType() << endl;
 
         /* symbol() test */
-        if(this->commandType() == A_COMMAND)
+        if (this->commandType() == A_COMMAND)
             cout << this->symbol() << endl;
 
         fout << command << endl;
@@ -102,18 +102,20 @@ string Parser::comp()
     // Judge whether the current command is a C-Command.
     if (this->commandType() != C_COMMAND)
         throw runtime_error("Not a C command!");
-
-    // Return the comp field
-    // Parse command such as "0;JEQ"
-    int semiPos = this->currentCmd.find(';');
-    if (semiPos != string::npos)
-        // If there is a jump field, return the chars before ";" for comp field.
-        return this->currentCmd.substr(0, semiPos);
     else
     {
-        // Parse command such as "D=A"
-        int eqPos = this->currentCmd.find('=');
-        return this->currentCmd.substr(eqPos + 1);
+        // Return the comp field
+        // Parse command such as "0;JEQ"
+        int semiPos = this->currentCmd.find(';');
+        if (semiPos != string::npos)
+            // If there is a jump field, return the chars before ";" for comp field.
+            return this->currentCmd.substr(0, semiPos);
+        else
+        {
+            // Parse command such as "D=A"
+            int eqPos = this->currentCmd.find('=');
+            return this->currentCmd.substr(eqPos + 1);
+        }
     }
 }
 
@@ -122,13 +124,15 @@ string Parser::dest()
     // Check whether the current command is a C-Command.
     if (this->commandType() != C_COMMAND)
         throw runtime_error("Not a C command!");
-
-    // Check whether there is a dest field.
-    int eqPos = this->currentCmd.find("=");
-    if (eqPos != string::npos)
-        return this->currentCmd.substr(0, eqPos);
     else
-        return "null";
+    {
+        // Check whether there is a dest field.
+        int eqPos = this->currentCmd.find("=");
+        if (eqPos != string::npos)
+            return this->currentCmd.substr(0, eqPos);
+        else
+            return "null";
+    }
 }
 
 string Parser::jump()
