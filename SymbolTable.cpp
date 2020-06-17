@@ -31,8 +31,10 @@ void SymbolTable::loadTable(initializer_list<string> files)
             symbol = line.substr(0, tabPos);
             address = stoi(line.substr(tabPos + 1));
             this->symbTable[symbol] = address;
+            // cout << symbol << '\t' << symbTable[symbol] << '\t' << this->contains(symbol) << endl;
         }
         fin.close();
+        
     }
 }
 

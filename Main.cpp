@@ -9,10 +9,12 @@
 
 using namespace std;
 
-bool isNumber(const string& s)
+bool isNumber(const std::string &s)
 {
-    return !s.empty() && std::find_if(s.begin(), 
-        s.end(), [](unsigned char c) { return !std::isdigit(c); }) == s.end();
+    std::string::const_iterator it = s.begin();
+    while (it != s.end() && std::isdigit(*it))
+        ++it;
+    return !s.empty() && it == s.end();
 }
 
 int main(int argc, char *argv[])
@@ -32,9 +34,12 @@ int main(int argc, char *argv[])
     {
         parser1.advance();
         if (parser1.commandType() == L_COMMAND)
+        {
             symbTable.addEntry(parser1.symbol(), romAddr + 1);
+            //cout << parser1.symbol() << '\t' << symbTable.getAddress(parser1.symbol()) << endl;
+        }
         else
-            romAddr++;
+            ++romAddr;
     }
 
     // Second scan.
@@ -42,36 +47,38 @@ int main(int argc, char *argv[])
     hackFile.open(asmFile.substr(0, asmFile.find('.')) + ".hack");
     int memOffset = 16;
     int memAddr = 0;
-    string command;
     string symbol;
     string binary;
     Parser parser2(asmFile);
     Code code;
+
     while (parser2.hasMoreCommands())
     {
         parser2.advance();
-        command = parser2.currentCmd;
+        cout << parser2.currentCmd << endl;
         if (parser2.commandType() == A_COMMAND)
         {
+            //cout << " A_COMMAND!" << endl;
             symbol = parser2.symbol();
             // @ a constant
             if (isNumber(symbol))
             {
-                binary = code.aCmdCode(parser2.symbol());
-                hackFile << binary << endl;
+                binary = code.aCmdCode(symbol);
             }
             // Check if this symbol is a label which already been mapped.
             else if (symbTable.contains(symbol))
             {
                 memAddr = symbTable.getAddress(symbol);
                 binary = code.aCmdCode(to_string(memAddr));
-                hackFile << binary << endl;
             }
             // Then the symbol must be a variable.
-            else {
+            else
+            {
                 symbTable.addEntry(symbol, memOffset);
-                memOffset++;
+                binary = code.aCmdCode(to_string(memOffset));
+                ++memOffset;
             }
+            hackFile << binary << endl;
         }
         else if (parser2.commandType() == C_COMMAND)
         {
@@ -83,4 +90,3 @@ int main(int argc, char *argv[])
 
     return 0;
 }
-

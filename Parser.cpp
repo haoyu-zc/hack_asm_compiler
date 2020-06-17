@@ -51,17 +51,22 @@ bool Parser::hasMoreCommands()
 // Variables for advance()
 void Parser::advance()
 {
-    string pattern = "\\W*//.+";
-    regex r(pattern);
+    // Remove "//" comments and spaces in the front.
+    string pattern_comt = "\\W*//.+";
+    string pattern_spaces = "^\\s*";
+    regex r_comt(pattern_comt);
+    regex r_spaces(pattern_spaces);
     string fmt = "";
     string line;
     getline(fin, line);
-    line = regex_replace(line, r, fmt);
+    line = regex_replace(line, r_comt, fmt);
+    line = regex_replace(line, r_spaces, fmt);
     // Skip empty lines after removing comments.
     while (line.empty())
     {
         getline(fin, line);
-        line = regex_replace(line, r, fmt);
+        line = regex_replace(line, r_comt, fmt);
+        line = regex_replace(line, r_spaces, fmt);
     }
     this->currentCmd = line;
 }
