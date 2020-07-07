@@ -11,10 +11,18 @@ using namespace std;
 
 bool isNumber(const std::string &s)
 {
-    std::string::const_iterator it = s.begin();
+    string::const_iterator it = s.begin();
     while (it != s.end() && std::isdigit(*it))
         ++it;
     return !s.empty() && it == s.end();
+}
+
+static std::string GetName(const std::string &path)
+{
+    auto pos = path.rfind('/');
+    if (pos == std::string::npos)
+        return path;
+    return path.substr(pos + 1);
 }
 
 int main(int argc, char *argv[])
