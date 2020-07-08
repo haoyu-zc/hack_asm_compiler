@@ -6,8 +6,10 @@
 #include "SymbolTable.h"
 #include <stdexcept>
 #include <algorithm>
+#include <filesystem>
 
 using namespace std;
+namespace fs = filesystem;
 
 std::string program;
 std::string filename_in;
@@ -32,10 +34,10 @@ static std::string getExtension(const std::string &filename)
 
 static std::string getName(const std::string &path)
 {
-    auto pos = path.rfind('/');
+    auto pos = path.rfind('\\');
     if (pos == std::string::npos)
         return path;
-    return path.substr(pos + 1);
+    return fs::path(path).stem();
 }
 
 static void validateFileName(const std::string &filename)
