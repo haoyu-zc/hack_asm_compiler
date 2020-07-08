@@ -9,7 +9,6 @@
 #include <filesystem>
 
 using namespace std;
-namespace fs = filesystem;
 
 std::string program;
 std::string filename_in;
@@ -34,10 +33,8 @@ static std::string getExtension(const std::string &filename)
 
 static std::string getName(const std::string &path)
 {
-    auto pos = path.rfind('\\');
-    if (pos == std::string::npos)
-        return path;
-    return fs::path(path).stem();
+    filesystem::path filePath(path);
+    return filePath.stem().string();
 }
 
 static void validateFileName(const std::string &filename)
