@@ -7,41 +7,42 @@
 #include <stdexcept>
 #include <algorithm>
 #include <filesystem>
+#include "utils.h"
 
 using namespace std;
 
 std::string program;
 std::string filename_in;
 std::string filename_out;
+filesystem::path filepath;
 bool debug = false;
 static bool only_preprocess = false;
 static bool only_compile = false;
 static bool specified_out_name = false;
 
-bool isNumber(const std::string &s)
+
+
+static string getExtension(const filesystem::path &filepath)
 {
-    string::const_iterator it = s.begin();
-    while (it != s.end() && std::isdigit(*it))
-        ++it;
-    return !s.empty() && it == s.end();
+    //return filename.substr(filename.size() >= 2 ? filename.size() - 2 : 0);
+    return filepath.extension().string();
 }
 
-static std::string getExtension(const std::string &filename)
+static string getNameStem(const filesystem::path &filepath)
 {
-    return filename.substr(filename.size() >= 2 ? filename.size() - 2 : 0);
+    return filepath.stem().string();
 }
 
-static std::string getName(const std::string &path)
+static string getName(const filesystem::path &filepath)
 {
-    filesystem::path filePath(path);
-    return filePath.stem().string();
+    return filepath.filename().string();
 }
 
-static void validateFileName(const std::string &filename)
+static void validateFileName(const filesystem::path &filepath)
 {
-    auto ext = getExtension(filename);
+    auto ext = getExtension(filepath);
     if (ext != ".cpp" && ext != "cc" && ext != ".s" && ext != ".o" && ext != ".a")
-        throw invalid_argument("bad file name format: " + filename);
+        throw invalid_argument("bad file name format: " + getName(filepath));
 }
 
 int main(int argc, char *argv[])
@@ -50,11 +51,12 @@ int main(int argc, char *argv[])
     {
         throw invalid_argument("ERROR. Assembly file name not provided!");
     }
-    string filename_in = argv[1];
+    filepath = filesystem::path(argv[1]);
+    filename_in = filepath.stem().string();
 
     SymbolTable symbTable;
     // First scan to deal with labels.
-    Parser parser1(filename_in);
+    Parser parser1(filepath.string());
     // Rom addresss starting from 0. ++romAdd when encounter none-L commands.
     int romAddr = -1;
     while (parser1.hasMoreCommands())
@@ -76,7 +78,7 @@ int main(int argc, char *argv[])
     int memAddr;
     string symbol;
     string binary;
-    Parser parser2(filename_in);
+    Parser parser2(filepath.string());
     Code code;
 
     while (parser2.hasMoreCommands())
