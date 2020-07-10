@@ -8,6 +8,7 @@
 #include <algorithm>
 #include <filesystem>
 #include "utils.h"
+#include "file.h"
 
 using namespace std;
 
@@ -20,30 +21,6 @@ static bool only_preprocess = false;
 static bool only_compile = false;
 static bool specified_out_name = false;
 
-
-
-static string getExtension(const filesystem::path &filepath)
-{
-    //return filename.substr(filename.size() >= 2 ? filename.size() - 2 : 0);
-    return filepath.extension().string();
-}
-
-static string getNameStem(const filesystem::path &filepath)
-{
-    return filepath.stem().string();
-}
-
-static string getName(const filesystem::path &filepath)
-{
-    return filepath.filename().string();
-}
-
-static void validateFileName(const filesystem::path &filepath)
-{
-    auto ext = getExtension(filepath);
-    if (ext != ".cpp" && ext != "cc" && ext != ".s" && ext != ".o" && ext != ".a")
-        throw invalid_argument("bad file name format: " + getName(filepath));
-}
 
 int main(int argc, char *argv[])
 {
