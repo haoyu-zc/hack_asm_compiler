@@ -1,9 +1,9 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include "Parser.h"
-#include "Code.h"
-#include "SymbolTable.h"
+#include "parser.h"
+#include "code.h"
+#include "symbol_table.h"
 #include <stdexcept>
 #include <algorithm>
 #include <filesystem>

@@ -1,7 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include "Parser.h"
+#include "parser.h"
 #include <regex>
 #include <algorithm>
 

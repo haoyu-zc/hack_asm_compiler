@@ -1,4 +1,4 @@
-#include "SymbolTable.h"
+#include "symbol_table.h"
 #include <string>
 #include <map>
 #include <fstream>
