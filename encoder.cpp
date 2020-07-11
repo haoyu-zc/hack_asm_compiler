@@ -1,4 +1,4 @@
-#include "code.h"
+#include "encoder.h"
 #include <string>
 #include <map>
 #include <fstream>
@@ -12,7 +12,7 @@
 
 using namespace std;
 
-Code::Code()
+Encoder::Encoder()
 {
     string compa0File = "./tables/comp_a0.txt";
     string compa1File = "./tables/comp_a1.txt";
@@ -22,7 +22,8 @@ Code::Code()
     this->loadTable({compa0File, compa1File, destFile, jumpFile});
 }
 
-void Code::loadTable(initializer_list<string> files)
+// Load external files of command bit translation rules
+void Encoder::loadTable(initializer_list<string> files)
 {
     for (const string &file : files)
     {
@@ -51,29 +52,29 @@ void Code::loadTable(initializer_list<string> files)
     }
 }
 
-string Code::comp(string compStr)
+string Encoder::comp(string compStr)
 {
     return this->compTable[compStr];
 }
 
-string Code::dest(string destStr)
+string Encoder::dest(string destStr)
 {
     return this->destTable[destStr];
 }
 
-string Code::jump(string jumpStr)
+string Encoder::jump(string jumpStr)
 {
     return this->jumpTable[jumpStr];
 }
 
-string Code::aCmdCode(string aStr)
+string Encoder::aCmdEncoder(string aStr)
 {
     // Convert the decimal value of an A-Command to a binary string with leading-zero padding.
     string binary = bitset<15>(stoi(aStr)).to_string();
     return "0" + binary;
 }
 
-void Code::writeFile(Parser &parser, string &filename,  SymbolTable &symbTable)
+void Encoder::writeFile(Parser &parser, string &filename, SymbolTable &symbTable)
 {
     ofstream hackFile;
     hackFile.open(getNameStem(filename) + ".hack");
@@ -92,19 +93,19 @@ void Code::writeFile(Parser &parser, string &filename,  SymbolTable &symbTable)
             // @ a constant
             if (isNumber(symbol))
             {
-                binary = aCmdCode(symbol);
+                binary = aCmdEncoder(symbol);
             }
             // Check if this symbol is a label which already been mapped.
             else if (symbTable.contains(symbol))
             {
                 memAddr = symbTable.getAddress(symbol);
-                binary = aCmdCode(to_string(memAddr));
+                binary = aCmdEncoder(to_string(memAddr));
             }
             // Then the symbol must be a variable.
             else
             {
                 symbTable.addEntry(symbol, memOffset);
-                binary = aCmdCode(to_string(memOffset));
+                binary = aCmdEncoder(to_string(memOffset));
                 ++memOffset;
             }
             hackFile << binary << endl;

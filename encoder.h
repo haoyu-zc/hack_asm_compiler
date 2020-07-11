@@ -9,7 +9,7 @@ using std::string;
 using std::map;
 using std::initializer_list;
 
-class Code
+class Encoder
 {
 private:
     map<string, string> compTable;
@@ -17,12 +17,12 @@ private:
     map<string, string> jumpTable;
 
 public:
-    Code();
+    Encoder();
     void loadTable(initializer_list<string> files);
     string comp(string compStr);
     string dest(string destStr);
     string jump(string jumpStr);
-    string aCmdCode(string aStr);
+    string aCmdEncoder(string aStr);
     void writeFile(Parser &parser, string &filename, SymbolTable &symbolTable);
 };
 

@@ -14,8 +14,10 @@ SymbolTable::SymbolTable()
     this->loadTable({tableFile});
 }
 
+// Load external predefined variables
 void SymbolTable::loadTable(initializer_list<string> files)
 {
+    
     ifstream fin;
     string line;
     string symbol;

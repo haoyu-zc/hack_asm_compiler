@@ -2,7 +2,7 @@
 #include <fstream>
 #include <string>
 #include "parser.h"
-#include "code.h"
+#include "encoder.h"
 #include "symbol_table.h"
 #include <stdexcept>
 #include <algorithm>
@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
 
     // Second scan.
     Parser parser2(filepath.string());
-    Code code;
+    Encoder code;
     code.writeFile(parser2, filename_in, symbTable);
 
     return 0;
