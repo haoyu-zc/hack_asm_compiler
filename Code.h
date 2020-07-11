@@ -2,6 +2,8 @@
 #include <string>
 #include <map>
 #include <initializer_list>
+#include "parser.h"
+#include "symbol_table.h"
 
 using std::string;
 using std::map;
@@ -21,5 +23,6 @@ public:
     string dest(string destStr);
     string jump(string jumpStr);
     string aCmdCode(string aStr);
+    void writeFile(Parser &parser, string &filename, SymbolTable &symbolTable);
 };
 

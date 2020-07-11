@@ -5,6 +5,10 @@
 #include <iostream>
 #include <initializer_list>
 #include <bitset>
+#include "parser.h"
+#include "file.h"
+#include "utils.h"
+#include "symbol_table.h"
 
 using namespace std;
 
@@ -17,7 +21,6 @@ Code::Code()
 
     this->loadTable({compa0File, compa1File, destFile, jumpFile});
 }
-
 
 void Code::loadTable(initializer_list<string> files)
 {
@@ -68,4 +71,49 @@ string Code::aCmdCode(string aStr)
     // Convert the decimal value of an A-Command to a binary string with leading-zero padding.
     string binary = bitset<15>(stoi(aStr)).to_string();
     return "0" + binary;
+}
+
+void Code::writeFile(Parser &parser, string &filename,  SymbolTable &symbTable)
+{
+    ofstream hackFile;
+    hackFile.open(getNameStem(filename) + ".hack");
+    int memOffset = 16;
+    int memAddr;
+    string symbol;
+    string binary;
+
+    while (parser.hasMoreCommands())
+    {
+        parser.advance();
+        if (parser.commandType() == A_COMMAND)
+        {
+            //cout << " A_COMMAND!" << endl;
+            symbol = parser.symbol();
+            // @ a constant
+            if (isNumber(symbol))
+            {
+                binary = aCmdCode(symbol);
+            }
+            // Check if this symbol is a label which already been mapped.
+            else if (symbTable.contains(symbol))
+            {
+                memAddr = symbTable.getAddress(symbol);
+                binary = aCmdCode(to_string(memAddr));
+            }
+            // Then the symbol must be a variable.
+            else
+            {
+                symbTable.addEntry(symbol, memOffset);
+                binary = aCmdCode(to_string(memOffset));
+                ++memOffset;
+            }
+            hackFile << binary << endl;
+        }
+        else if (parser.commandType() == C_COMMAND)
+        {
+            binary = "111" + comp(parser.comp()) + dest(parser.dest()) + jump(parser.jump());
+            hackFile << binary << endl;
+        }
+    }
+    hackFile.close();
 }

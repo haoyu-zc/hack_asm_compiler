@@ -4,6 +4,7 @@
 #include <fstream>
 #include <iostream>
 #include <initializer_list>
+#include "parser.h"
 
 using namespace std;
 
@@ -34,7 +35,23 @@ void SymbolTable::loadTable(initializer_list<string> files)
             // cout << symbol << '\t' << symbTable[symbol] << '\t' << this->contains(symbol) << endl;
         }
         fin.close();
-        
+    }
+}
+
+void SymbolTable::loadSymbol(Parser &parser)
+{
+    // Rom addresss starting from 0. ++romAdd when encounter none-L commands.
+    int romAddr = -1;
+    while (parser.hasMoreCommands())
+    {
+        parser.advance();
+        if (parser.commandType() == L_COMMAND)
+        {
+            addEntry(parser.symbol(), romAddr + 1);
+            //cout << parser1.symbol() << '\t' << symbTable.getAddress(parser1.symbol()) << endl;
+        }
+        else
+            ++romAddr;
     }
 }
 
@@ -53,5 +70,5 @@ bool SymbolTable::contains(string symbol)
 
 int SymbolTable::getAddress(string symbol)
 {
-    return this->symbTable[symbol];
+    return symbTable[symbol];
 }
