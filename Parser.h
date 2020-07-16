@@ -7,10 +7,7 @@ using std::endl;
 using std::ifstream;
 using std::string;
 
-// Or use constexpr int A_COMMAND = 1; ? 
-static const int A_COMMAND = 1;
-static const int C_COMMAND = 2;
-static const int L_COMMAND = 3;
+enum COMMAND_TYPE {A_COMMAND, C_COMMAND, L_COMMAND};
 
 class Parser
 {
