@@ -1,4 +1,4 @@
-# Assembly compiler for Coursera Course Nand2tetris
+# Assembly compiler for Jack Programming Language
 
 ## Compile
 
